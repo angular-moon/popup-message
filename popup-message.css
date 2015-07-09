@@ -1,0 +1,25 @@
+/* 自动消失的提示信息 */
+.toast_wrap {
+    position: fixed;
+    top: 30%;
+    left:0;
+    width: 100%;
+    z-index: 100000;
+}
+
+.toast {
+    margin: 0 auto;
+    padding: 20px 10px;
+    width:200px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 20px;
+    color: white;
+    background-color: #1A71E6;
+    filter: alpha(opacity = 95);
+    -moz-opacity: 0.95;
+    -khtml-opacity: 0.95;
+    opacity: 0.95;
+    border: 2px solid #155BBB;
+    display: block;
+}

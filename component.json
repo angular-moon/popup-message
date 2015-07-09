@@ -1,0 +1,14 @@
+{
+    "version": "1.0.0",
+    "description": "弹出式消息框",
+    "name": "popup-message",
+    "main": "popup-message.js",
+    "dependencies": [
+        "jquery@1.8.3"
+    ],
+    "shim": {
+        "popup-message.js": {
+            "deps": ["jquery"]
+        }
+    }
+}
