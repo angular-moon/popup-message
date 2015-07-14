@@ -4,11 +4,11 @@
     "name": "popup-message",
     "main": "popup-message.js",
     "dependencies": [
-        "jquery@1.8.3"
+        "jquery-msgbox"
     ],
     "shim": {
         "popup-message.js": {
-            "deps": ["jquery"]
+            "deps": ["jquery-msgbox"]
         }
     }
 }
