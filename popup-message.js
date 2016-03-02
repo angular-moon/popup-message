@@ -1,4 +1,5 @@
 
+var swal = require('sweetalert');
 var pop = {};
 
 pop.showToast = function(message)
@@ -15,15 +16,8 @@ pop.showToast = function(message)
 	});
 };
 
-//type:"alert, error, warning, success, confirm"
-//message:"提示信息";
-//cb:类型为confirm时为确定按钮的回调,为其他类型时为关闭按钮的回调;
-//title:"自定义title"
-//cancelCb:类型为confirm时,取消按钮的回调;
-//width:指定弹出窗口宽度
-//height:指定弹出窗口高度
 var showMsgId = 0;
-pop.showMsg = function(type, message, cb, title, cancelCb, width, height){
+function msgbox(type, message, cb, title, cancelCb, width, height){
 	var isFire = false;
 	var id = showMsgId++;
 	if(!cb){
@@ -36,7 +30,7 @@ pop.showMsg = function(type, message, cb, title, cancelCb, width, height){
 		case 'alert': if(!title)title='提示'; break;
 		case 'error': if(!title)title='错误'; break;
 	    case 'warning': if(!title)title='警告'; break;
-		case 'success': if(!title)title='恭喜您'; break;
+		case 'success': if(!title)title='成功'; break;
 		case 'confirm': if(!title)title='请确认'; break;
 	}
 	
@@ -88,6 +82,64 @@ pop.showMsg = function(type, message, cb, title, cancelCb, width, height){
 
 	$.msgbox(id).open();
 };
+
+var regx = /showMsg|alert|error|warning|success|confirm/;
+function sweetalert(type, message, cb, title, cancelCb){
+
+	var options = {	title:title,
+					text: message,
+					type: type,
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					showCancelButton: false,
+					closeOnConfirm: true,
+					html: true
+					};
+
+	if(!cb){
+		cb = function (){};
+	}else if(cb.toString().search(regx) !== -1){
+		options.closeOnConfirm = false;
+	}
+
+	if(!cancelCb){
+		cancelCb = function (){};
+	}
+
+	switch(type){
+		case 'alert': if(!title)options.title='提示';options.type='info'; break;
+		case 'error': if(!title)options.title='错误'; break;
+		case 'warning': if(!title)options.title='警告'; break;
+		case 'success': if(!title)options.title='成功'; break;
+		case 'confirm':
+			if(!title)options.title='请确认';
+			options.type='warning';
+			options.showCancelButton = true;
+			break;
+	}
+
+	swal(options, function(isConfirm){
+		if(isConfirm)
+			cb();
+		else
+			cancelCb();
+	})
+}
+
+//type:"alert, error, warning, success, confirm"
+//message:"提示信息";
+//cb:类型为confirm时为确定按钮的回调,为其他类型时为关闭按钮的回调;
+//title:"自定义title"
+//cancelCb:类型为confirm时,取消按钮的回调;
+//width:指定弹出窗口宽度
+//height:指定弹出窗口高度
+pop.showMsg = function(type, message, cb, title, cancelCb, width, height){
+	if($.browser.msie && $.browser.version < 9){
+		msgbox.apply(this, arguments);
+	}else{
+		sweetalert.apply(this, arguments);
+	}
+}
 
 pop.alert = createShot("alert");
 pop.error = createShot("error");
