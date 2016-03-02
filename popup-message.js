@@ -22,9 +22,10 @@ pop.showToast = function(message)
 //cancelCb:类型为confirm时,取消按钮的回调;
 //width:指定弹出窗口宽度
 //height:指定弹出窗口高度
+var showMsgId = 0;
 pop.showMsg = function(type, message, cb, title, cancelCb, width, height){
 	var isFire = false;
-	var id = 0;
+	var id = showMsgId++;
 	if(!cb){
 		cb = function (){};
 	}
@@ -32,11 +33,11 @@ pop.showMsg = function(type, message, cb, title, cancelCb, width, height){
 		cancelCb = function (){};
 	}
 	switch(type){
-		case 'alert': if(!title)title='提示'; id="0"; break;
-		case 'error': if(!title)title='错误'; id="1"; break;
-	    case 'warning': if(!title)title='警告'; id="2"; break;
-		case 'success': if(!title)title='恭喜您'; id="3"; break;
-		case 'confirm': if(!title)title='请确认'; id="4"; break;
+		case 'alert': if(!title)title='提示'; break;
+		case 'error': if(!title)title='错误'; break;
+	    case 'warning': if(!title)title='警告'; break;
+		case 'success': if(!title)title='恭喜您'; break;
+		case 'confirm': if(!title)title='请确认'; break;
 	}
 	
 	if(!$ || !$.msgbox){
