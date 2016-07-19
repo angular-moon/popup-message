@@ -119,6 +119,10 @@ function sweetalert(type, message, cb, title, cancelCb){
 	}
 
 	swal(options, function(isConfirm){
+		
+  		if(isFire) return;
+        isFire = true;
+
 		if(isConfirm)
 			cb();
 		else
