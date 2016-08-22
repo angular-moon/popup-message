@@ -1,3 +1,5 @@
+require('jquery-msgbox');
+require('css!popup-message.css');
 
 var swal = require('sweetalert');
 var pop = {};
@@ -83,12 +85,13 @@ function msgbox(type, message, cb, title, cancelCb, width, height){
 	$.msgbox(id).open();
 };
 
-var regx = /showMsg|alert|error|warning|success|confirm/;
+var regx = /(showMsg|alert|error|warning|success|confirm)\s*\(/;
 function sweetalert(type, message, cb, title, cancelCb){
-
+    var isFire = false;
 	var options = {	title:title,
 					text: message,
 					type: type,
+                    allowEscapeKey: false,
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					showCancelButton: false,
@@ -99,6 +102,8 @@ function sweetalert(type, message, cb, title, cancelCb){
 	if(!cb){
 		cb = function (){};
 	}else if(cb.toString().search(regx) !== -1){
+		//当回调中会再次调用sweetalert时,设置closeOnConfirm为false,
+		//否则sweetalert会被自动关闭
 		options.closeOnConfirm = false;
 	}
 
@@ -119,8 +124,8 @@ function sweetalert(type, message, cb, title, cancelCb){
 	}
 
 	swal(options, function(isConfirm){
-		
-  		if(isFire) return;
+
+        if(isFire) return;
         isFire = true;
 
 		if(isConfirm)
