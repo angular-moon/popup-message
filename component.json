@@ -5,7 +5,7 @@
     "main": "popup-message.js",
     "dependencies": [
         "jquery-msgbox",
-        "sweetalert",
+        "sweetalert2",
         "css"
     ],
     "shim": {
