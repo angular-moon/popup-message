@@ -1,7 +1,4 @@
-require('jquery-msgbox');
-require('css!popup-message.css');
-
-var swal = require('sweetalert');
+var swal = require('sweetalert2');
 var pop = {};
 
 pop.showToast = function(message)
@@ -85,31 +82,18 @@ function msgbox(type, message, cb, title, cancelCb, width, height){
 	$.msgbox(id).open();
 };
 
-var regx = /(showMsg|alert|error|warning|success|confirm)\s*\(/;
 function sweetalert(type, message, cb, title, cancelCb){
     var isFire = false;
-	var options = {	title:title,
-					text: message,
+    var options = { title:title,
+                    html: message,
 					type: type,
-                    allowEscapeKey: false,
+                    allowEscapeKey: true,
+                    allowOutsideClick: false,
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
-					showCancelButton: false,
-					closeOnConfirm: true,
-					html: true
-					};
+					showCancelButton: false
+                    };
 
-	if(!cb){
-		cb = function (){};
-	}else if(cb.toString().search(regx) !== -1){
-		//当回调中会再次调用sweetalert时,设置closeOnConfirm为false,
-		//否则sweetalert会被自动关闭
-		options.closeOnConfirm = false;
-	}
-
-	if(!cancelCb){
-		cancelCb = function (){};
-	}
 
 	switch(type){
 		case 'alert': if(!title)options.title='提示';options.type='info'; break;
@@ -123,16 +107,14 @@ function sweetalert(type, message, cb, title, cancelCb){
 			break;
 	}
 
-	swal(options, function(isConfirm){
-
+    swal(options).then(function(){
         if(isFire) return;
         isFire = true;
+        //调用确定10回调函数
+        (cb || $.noop)();
 
-		if(isConfirm)
-			cb();
-		else
-			cancelCb();
-	})
+    //调用取消回调函数
+    }, (cancelCb || $.noop))
 }
 
 //type:"alert, error, warning, success, confirm"
@@ -143,7 +125,7 @@ function sweetalert(type, message, cb, title, cancelCb){
 //width:指定弹出窗口宽度
 //height:指定弹出窗口高度
 pop.showMsg = function(type, message, cb, title, cancelCb, width, height){
-	if($.browser.msie && $.browser.version < 9){
+	if($.browser.msie && $.browser.version < 10){
 		msgbox.apply(this, arguments);
 	}else{
 		sweetalert.apply(this, arguments);
