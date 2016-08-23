@@ -1,5 +1,5 @@
 * 提供了一个自动消失的弹出提示: showToast(message).
-* 对msgbox(ie) 和 sweetalert(ie9+, 现代浏览器)提供了一个简单的封装方法: showMsg(type, message, cb, title, cancelCb, width, height);
+* 对msgbox(ie) 和 sweetalert(ie10+, 现代浏览器)提供了一个简单的封装方法: showMsg(type, message, cb, title, cancelCb, width, height);
 
 #### 参数说明: 
 * type:"alert, error, warning, success, confirm"
