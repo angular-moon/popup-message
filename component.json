@@ -5,12 +5,11 @@
     "main": "popup-message.js",
     "dependencies": [
         "jquery-msgbox",
-        "sweetalert2",
-        "css"
+        "sweetalert2"
     ],
     "shim": {
         "popup-message.js": {
-            "deps": ["jquery-msgbox", "css!popup-message.css"]
+            "deps": ["jquery-msgbox", "popup-message.css"]
         }
     }
 }
