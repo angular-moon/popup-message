@@ -1,5 +1,5 @@
 {
-    "version": "1.1.5",
+    "version": "1.1.6",
     "description": "弹出式消息框",
     "name": "popup-message",
     "main": "popup-message.js",
