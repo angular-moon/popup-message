@@ -137,12 +137,12 @@ pop.error = createShot("error");
 pop.warning = createShot("warning");
 pop.success = createShot("success");
 pop.confirm = function(message, cb, title, cancelCb, width, height){
-		this.showMsg("confirm", message, cb, title, cancelCb, width, height);
+		pop.showMsg("confirm", message, cb, title, cancelCb, width, height);
 	}
 
 function createShot(type){
 	return function(message, cb, title, width, height){
-		this.showMsg(type, message, cb, title, null, width, height);
+		pop.showMsg(type, message, cb, title, null, width, height);
 	}
 }
 
